@@ -11,36 +11,25 @@ full design rationale.
 - A C++17 compiler
 - GLFW3 (dev package, e.g. `libglfw3-dev` on Ubuntu)
 - GLAD, generated once by hand (not vendored here — see below)
-
-## One-time setup: GLAD
-
-This project loads OpenGL function pointers via GLAD, which is a generated
-loader rather than a library you can `apt install`. Generate it once:
-
-1. Go to https://glad.dav1d.de
-2. Language: C/C++, Specification: OpenGL, API gl: Version 4.5, Profile: Core
-3. Generate a loader, download the zip
-4. Unzip so you end up with:
-   ```
-   particle-sim/third_party/glad/include/glad/glad.h
-   particle-sim/third_party/glad/include/KHR/khrplatform.h
-   particle-sim/third_party/glad/src/glad.c
+   
+## With cmake:
+   Build
+   ```bash
+   cmake -B build -S .
+   cmake --build build -j
    ```
 
-## Build
+   Run
+   ```bash
+   ./build/particle-sim
+   ```
 
+##  Or use the handy:
 ```bash
-cmake -B build -S .
-cmake --build build -j
+./b.sh
 ```
 
-## Run
-
-```bash
-./build/particle-sim
-```
-
-A window opens showing 100,000 points bouncing inside a `[-1, 1]²` box under
+To run a window opens showing N points bouncing inside a `[-1, 1]²` box under
 constant downward acceleration.
 
 ## File map
@@ -56,3 +45,20 @@ constant downward acceleration.
 | `src/Renderer.h/.cpp` | Shaders, VAO, draw call — no CUDA symbols |
 | `src/MPIManager.h` | No-op stub, kept for interface stability |
 | `shaders/*.vert,.frag` | Minimal point-sprite shaders |
+
+## One-time setup: GLAD
+
+This project loads OpenGL function pointers via GLAD, which is a generated
+loader rather than a library you can `apt install`. 
+
+It was generated once via these instructions:
+
+1. Go to https://glad.dav1d.de
+2. Language: C/C++, Specification: OpenGL, API gl: Version 4.5, Profile: Core
+3. Generate a loader, download the zip
+4. Unzip so you end up with:
+   ```
+   particle-sim/third_party/glad/include/glad/glad.h
+   particle-sim/third_party/glad/include/KHR/khrplatform.h
+   particle-sim/third_party/glad/src/glad.c
+   ```
